@@ -1,6 +1,5 @@
-package com.elekiwi.expensestracker.ui.theme
+package com.elekiwi.expensestracker.core.presentation.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

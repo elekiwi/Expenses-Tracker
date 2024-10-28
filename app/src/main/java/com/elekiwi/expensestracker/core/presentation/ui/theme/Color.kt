@@ -1,4 +1,4 @@
-package com.elekiwi.expensestracker.ui.theme
+package com.elekiwi.expensestracker.core.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

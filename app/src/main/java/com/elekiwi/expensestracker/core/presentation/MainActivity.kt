@@ -1,4 +1,4 @@
-package com.elekiwi.expensestracker
+package com.elekiwi.expensestracker.core.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.elekiwi.expensestracker.ui.theme.ExpensesTrackerTheme
+import com.elekiwi.expensestracker.core.presentation.ui.theme.ExpensesTrackerTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
