@@ -16,8 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.elekiwi.expensestracker.balance.presentation.BalanceScreenCore
 import com.elekiwi.expensestracker.core.presentation.ui.theme.ExpensesTrackerTheme
 import com.elekiwi.expensestracker.core.presentation.util.Screen
+import com.elekiwi.expensestracker.expenses_overview.presentation.ExpensesOverviewScreenCore
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,22 +42,35 @@ class MainActivity : ComponentActivity() {
             startDestination = Screen.ExpenseOverview
         ) {
             composable<Screen.ExpenseOverview> {
-                Box(modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center) {
-                    Text("Expenses Overview")
-                }
+                ExpensesOverviewScreenCore(
+                    onBalanceClick = {
+                        navController.navigate(Screen.Balance)
+                    },
+                    onEditClick = {
+                        //TODO: How to pass the object id to this screen???
+                        navController.navigate(Screen.ExpenseDetails(expenseId = -1))
+                    },
+                    onAddExpenseClick = {
+                        navController.navigate(Screen.ExpenseDetails)
+                    }
+                )
             }
 
             composable<Screen.ExpenseDetails> {
-                Box(modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     Text("Expenses Details")
                 }
             }
 
 
             composable<Screen.Balance> {
-
+                BalanceScreenCore(
+                    onSaveClick = {
+                        navController.popBackStack()
+                    })
             }
         }
     }
