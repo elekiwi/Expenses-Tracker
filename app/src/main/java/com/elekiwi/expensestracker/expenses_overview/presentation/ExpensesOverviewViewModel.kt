@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elekiwi.expensestracker.core.domain.CoreRepository
 import com.elekiwi.expensestracker.core.domain.Expense
-import com.elekiwi.expensestracker.core.domain.LocalExpensesDataSource
+import com.elekiwi.expensestracker.core.domain. LocalExpensesDataSource
 import com.elekiwi.expensestracker.expenses_overview.presentation.util.randomColor
 import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
@@ -25,8 +25,25 @@ class ExpensesOverviewViewModel(
             ExpensesOverviewAction.LoadExpensesOverviewAndBalance -> {
                 loadExpenseListAndBalance()
             }
-            is ExpensesOverviewAction.OnDateChanged -> TODO()
-            is ExpensesOverviewAction.OnDeleteExpense -> TODO()
+            is ExpensesOverviewAction.OnDateChanged -> {
+                val newDate = state.dateList[action.newDate]
+                viewModelScope.launch {
+                    state = state.copy(
+                        expensesList = getExpensesListByDate(newDate),
+                        pickedDate = newDate
+                    )
+                }
+            }
+            is ExpensesOverviewAction.OnDeleteExpense -> {
+                viewModelScope.launch {
+                    expensesDataSource.deleteExpense(action.expenseId)
+                    state = state.copy(
+                        expensesList = getExpensesListByDate(state.pickedDate),
+                        dateList = expensesDataSource.getAllDates(),
+                        balance = coreRepository.getBalance() - expensesDataSource.getExpenseBalance()
+                    )
+                }
+            }
         }
     }
 
@@ -40,9 +57,10 @@ class ExpensesOverviewViewModel(
                 ),
                 balance = coreRepository.getBalance() - expensesDataSource.getExpenseBalance(),
                 pickedDate = allDates.lastOrNull() ?: ZonedDateTime.now(),
-                datesList = allDates.reversed()
+                dateList = allDates.reversed()
 
             )
+
         }
     }
 
