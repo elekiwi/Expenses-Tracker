@@ -61,6 +61,75 @@ class ExpensesOverviewViewModel(
 
             )
 
+            val dumy = listOf(
+                Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                ),
+                Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                ),
+                Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                ),
+                Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                ),Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                )
+                ,
+                Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                ),Expense(
+                    name = "Test",
+                    kilograms = 35.4,
+                    quantity = 10.0,
+                    dateTimeUtc = ZonedDateTime.now(),
+                    color = randomColor(),
+                    expenseId = null,
+                    price = 23.3
+                )
+            )
+
+            state = state.copy(
+                expensesList = dumy
+            )
+
         }
     }
 
