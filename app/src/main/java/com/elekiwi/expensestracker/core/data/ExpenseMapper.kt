@@ -1,24 +1,23 @@
 package com.elekiwi.expensestracker.core.data
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.elekiwi.expensestracker.core.data.local.ExpenseEntity
 import com.elekiwi.expensestracker.core.domain.Expense
 import java.time.Instant
 import java.time.ZoneId
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun ExpenseEntity.toSpending(): Expense = Expense(
-    expenseId = expenseId ?: 0,
+    expenseId = expenseId ?: -1,
     name = name,
     price = price,
     kilograms = kilograms,
     quantity = quantity,
-    dateTimeUtc = Instant.parse(dateTimeUtc).atZone(ZoneId.of("UTC"))
+    dateTimeUtc = Instant.parse(dateTimeUtc).atZone(
+        ZoneId.of("UTC")
+    )
 )
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun Expense.toNewSpendingEntity(): ExpenseEntity = ExpenseEntity(
+    expenseId = -1,
     name = name,
     price = price,
     kilograms = kilograms,
@@ -26,7 +25,6 @@ fun Expense.toNewSpendingEntity(): ExpenseEntity = ExpenseEntity(
     dateTimeUtc = dateTimeUtc.toInstant().toString()
 )
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun Expense.toEditedSpendingEntity(): ExpenseEntity = ExpenseEntity(
     expenseId = expenseId,
     name = name,

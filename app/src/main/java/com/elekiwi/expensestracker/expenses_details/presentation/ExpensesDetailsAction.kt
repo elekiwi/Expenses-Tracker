@@ -6,5 +6,6 @@ sealed interface ExpensesDetailsAction {
     data class UpdateKilograms(val newKilograms: Double) : ExpensesDetailsAction
     data class UpdateQuantity(val newQuantity: Double) : ExpensesDetailsAction
     data object SaveExpense: ExpensesDetailsAction
+    data class LoadExpense(val id: Int): ExpensesDetailsAction
 
 }

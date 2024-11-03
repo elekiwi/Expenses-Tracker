@@ -54,7 +54,11 @@ fun ExpensesDetailsScreenCore(
 
     val context = LocalContext.current
 
+
+
     LaunchedEffect(true) {
+        viewModel.onAction(ExpensesDetailsAction.LoadExpense(id))
+
         viewModel.event.collect { event ->
             when (event) {
                 ExpensesDetailsEvent.SaveFailed -> {
@@ -90,7 +94,7 @@ private fun ExpensesDetailsScreen(
                 ),
                 title = {
                     Text(
-                        "Add expense",
+                        if (state.expenseId == -1) "Add expense" else "Update expense",
                         fontFamily = montserrat,
                         fontSize = 25.sp,
                         color = MaterialTheme.colorScheme.primary

@@ -1,6 +1,7 @@
 package com.elekiwi.expensestracker.core.data
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.elekiwi.expensestracker.core.data.local.ExpenseDao
 import com.elekiwi.expensestracker.core.domain.Expense
@@ -35,11 +36,16 @@ class RoomExpenseDataSource(
     }
 
     override suspend fun getExpenses(id: Int): Expense {
+        Log.i("lekiwi_info3", "getExpenses: $id")
         return dao.getExpense(id).toSpending()
     }
 
     override suspend fun upsertExpense(expense: Expense) {
-        dao.upsertSpending(expense.toNewSpendingEntity())
+        if (expense.expenseId == -1) {
+            dao.upsertSpending(expense.toNewSpendingEntity())
+        } else {
+            dao.upsertSpending(expense.toEditedSpendingEntity())
+        }
     }
 
     override suspend fun getExpenseBalance(): Double {

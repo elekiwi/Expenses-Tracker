@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elekiwi.expensestracker.core.domain.Expense
+import com.elekiwi.expensestracker.core.domain.LocalExpensesDataSource
 import com.elekiwi.expensestracker.expenses_details.domain.UpsertExpenseUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -13,8 +14,9 @@ import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
 
 class ExpensesDetailsViewModel(
-    private val upsertExpenseUseCase: UpsertExpenseUseCase
-) : ViewModel(){
+    private val upsertExpenseUseCase: UpsertExpenseUseCase,
+    private val expensesDataSource: LocalExpensesDataSource
+    ) : ViewModel(){
 
     var state by mutableStateOf(ExpensesDetailsState())
         private set
@@ -46,12 +48,36 @@ class ExpensesDetailsViewModel(
                     }
                 }
             }
+
+            is ExpensesDetailsAction.LoadExpense -> {
+                loadExpense(action.id)
+            }
+        }
+    }
+
+    private fun loadExpense(id: Int) {
+
+        if (id == -1) {
+            return
+        }
+
+        viewModelScope.launch {
+            val expense = expensesDataSource.getExpenses(id)
+
+            state = state.copy(
+                expenseId = id,
+                name = expense.name,
+                price = expense.price,
+                kilograms = expense.kilograms,
+                quantity = expense.quantity
+            )
+
         }
     }
 
     private suspend fun saveExpense(): Boolean {
         val expense = Expense(
-            expenseId = null,
+            expenseId = state.expenseId,
             name = state.name,
             price = state.price,
             kilograms = state.kilograms,

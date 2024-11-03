@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val expensesDetailsModule = module {
     single { UpsertExpenseUseCase(get()) }
-    viewModel { ExpensesDetailsViewModel(get()) }
+    viewModel { ExpensesDetailsViewModel(get(),get()) }
 }

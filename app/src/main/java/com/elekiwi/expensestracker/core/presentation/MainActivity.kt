@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.elekiwi.expensestracker.balance.presentation.BalanceScreenCore
 import com.elekiwi.expensestracker.core.presentation.ui.theme.ExpensesTrackerTheme
 import com.elekiwi.expensestracker.core.presentation.util.Screen
@@ -60,8 +61,10 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            composable<Screen.ExpenseDetails> {
+            composable<Screen.ExpenseDetails> { backStackEntry ->
+                val expenseDetailsScreen: Screen.ExpenseDetails = backStackEntry.toRoute()
                 ExpensesDetailsScreenCore(
+                    id = expenseDetailsScreen.expenseId,
                     onSaveExpense = {
                         navController.popBackStack()
                     }
