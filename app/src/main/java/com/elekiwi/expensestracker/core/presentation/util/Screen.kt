@@ -6,7 +6,7 @@ sealed interface Screen {
     data object ExpenseOverview: Screen
 
     @kotlinx.serialization.Serializable
-    data class ExpenseDetails(val  expenseId: Int = -1): Screen
+    data class ExpenseDetails(val expenseId: Int = -1): Screen
 
     @kotlinx.serialization.Serializable
     data object Balance: Screen

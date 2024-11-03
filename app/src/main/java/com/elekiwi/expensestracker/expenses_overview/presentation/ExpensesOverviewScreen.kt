@@ -163,8 +163,8 @@ fun ExpensesList(
         itemsIndexed(state.expensesList) { index, expense ->
             ExoensesItem(
                 expense = expense,
-                onEditClick = { onEditClick(index) },
-                onDeleteExpense = { onDeleteExpense(index) }
+                onEditClick = { onEditClick(expense.expenseId ?: -1) },
+                onDeleteExpense = { onDeleteExpense(expense.expenseId ?: -1) }
             )
             Spacer(Modifier.height(20.dp))
         }
@@ -194,7 +194,7 @@ fun ExoensesItem(
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .combinedClickable(
-                    onClick = {},
+                    onClick = { onEditClick() },
                     onLongClick = {
                         isDeleteShowing = !isDeleteShowing
                     }
@@ -249,7 +249,7 @@ fun ExpenseInfo(
 ) {
     Row {
         Text(
-            text = "$name :",
+            text = "$name:  ",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Normal,

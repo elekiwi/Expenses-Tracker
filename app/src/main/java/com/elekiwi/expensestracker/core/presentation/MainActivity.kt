@@ -1,6 +1,7 @@
 package com.elekiwi.expensestracker.core.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.elekiwi.expensestracker.balance.presentation.BalanceScreenCore
 import com.elekiwi.expensestracker.core.presentation.ui.theme.ExpensesTrackerTheme
 import com.elekiwi.expensestracker.core.presentation.util.Screen
+import com.elekiwi.expensestracker.expenses_details.presentation.ExpensesDetailsScreenCore
 import com.elekiwi.expensestracker.expenses_overview.presentation.ExpensesOverviewScreenCore
 
 class MainActivity : ComponentActivity() {
@@ -46,23 +48,24 @@ class MainActivity : ComponentActivity() {
                     onBalanceClick = {
                         navController.navigate(Screen.Balance)
                     },
-                    onEditClick = {
+                    onEditClick = { expenseId ->
                         //TODO: How to pass the object id to this screen???
-                        navController.navigate(Screen.ExpenseDetails(expenseId = -1))
+                        Log.i("lekiwi_info", "Navigation: $expenseId")
+                        navController.navigate(Screen.ExpenseDetails(expenseId = expenseId))
                     },
                     onAddExpenseClick = {
-                        navController.navigate(Screen.ExpenseDetails)
+                        Log.i("lekiwi_info2", "Navigation:")
+                        navController.navigate(Screen.ExpenseDetails(expenseId = -1))
                     }
                 )
             }
 
             composable<Screen.ExpenseDetails> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Expenses Details")
-                }
+                ExpensesDetailsScreenCore(
+                    onSaveExpense = {
+                        navController.popBackStack()
+                    }
+                )
             }
 
 

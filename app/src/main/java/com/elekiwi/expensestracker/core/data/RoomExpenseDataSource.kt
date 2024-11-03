@@ -6,6 +6,7 @@ import com.elekiwi.expensestracker.core.data.local.ExpenseDao
 import com.elekiwi.expensestracker.core.domain.Expense
 import com.elekiwi.expensestracker.core.domain.LocalExpensesDataSource
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -26,10 +27,10 @@ class RoomExpenseDataSource(
     }
 
     override suspend fun getAllDates(): List<ZonedDateTime> {
-        val uniqueDates = mutableSetOf<ZonedDateTime>()
+        val uniqueDates = mutableSetOf<LocalDate>()
         return dao.getAllDates().map { Instant.parse(it).atZone(ZoneId.of("UTC")) }
             .filter {
-                uniqueDates.add(it)
+                uniqueDates.add(it.toLocalDate())
             }
     }
 
